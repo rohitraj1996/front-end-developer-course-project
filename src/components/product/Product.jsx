@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Typography from '@mui/material/Typography';
 import {memo, useContext} from "react";
-import {IconButton, Stack, Toolbar} from "@mui/material";
+import {Box, Grid, IconButton, Stack, Toolbar} from "@mui/material";
 import useAuthentication from "../../useAuthentication";
 import {generatePath, useNavigate} from "react-router-dom";
 
@@ -22,6 +22,8 @@ const Product = memo(({product}) => {
             sx={{
                 width: "18rem",
                 height: "24",
+                flexDirection: "column",
+                display: "flex",
             }}
         >
             <CardMedia
@@ -32,21 +34,18 @@ const Product = memo(({product}) => {
                 title={product.name}
             />
             <CardContent>
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }}
-                >
-                    <Typography gutterBottom variant="h5" component="div">
-                        {product.name}
-                    </Typography>
-                    <Typography gutterBottom variant="h6" component="div">
-                        &#8377; {product.price}
-                    </Typography>
-                </div>
+                <Grid justifyContent="center"
+                      alignItems="flex-start"
+                      container>
+                    <Grid item xs={8} paddingRight={1}>
+                        <Typography gutterBottom variant="h6" component="div">
+                            {product.name}
+                        </Typography></Grid>
+                    <Grid item xs={4}>
+                        <Typography gutterBottom variant="h6" component="div">
+                            &#8377; {product.price}
+                        </Typography></Grid>
+                </Grid>
                 <Typography
                     variant="body2"
                     color="text.secondary"
@@ -55,6 +54,7 @@ const Product = memo(({product}) => {
                     {product.description}
                 </Typography>
             </CardContent>
+            <Box style={{"flex-grow": "1"}}/>
             <Toolbar
                 sx={{
                     justifyContent: "space-between",

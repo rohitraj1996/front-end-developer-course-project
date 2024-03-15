@@ -1,20 +1,28 @@
 import Card from "@mui/material/Card";
 import {Grid, Step, StepLabel, Stepper} from "@mui/material";
-import {useState} from "react";
+import {useEffect} from "react";
 import CardContent from "@mui/material/CardContent";
 import Address from "./Address";
 import ConfirmOrder from "./ConfirmOrder";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {changeOrderStep} from "../../common/store/actions/orderActions";
+import {useNavigate} from "react-router-dom";
 
 const Order = () => {
 
-    const {activeStepNumber} = useSelector(
+    const {product, activeStepNumber} = useSelector(
         state => state.order, shallowEqual
     );
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const steps = ["Items", "Select Address", "Confirm Order"];
+
+    useEffect(() => {
+        if (!product) {
+            navigate("/");
+        }
+    }, [navigate, product]);
 
     const setActiveStep = stepNumber => {
         dispatch(changeOrderStep(stepNumber));

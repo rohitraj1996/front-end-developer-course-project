@@ -3,12 +3,14 @@ import {memo, useEffect, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {addOrder, changeOrderStep, changeQuantity} from "../../common/store/actions/orderActions";
 import {generatePath, useNavigate} from "react-router-dom";
+import {useSnackbar} from "notistack";
 
 const ProductDetails = memo(({id}) => {
     const [product, setProduct] = useState();
     const {quantity} = useSelector(state => state.order);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {enqueueSnackbar} = useSnackbar()
 
 
     const {products} = useSelector(
@@ -26,7 +28,7 @@ const ProductDetails = memo(({id}) => {
         const {value} = e.target;
 
         if (product.availableItems < value) {
-            alert("Selected Order Quantity greater than Available Items.")
+            enqueueSnackbar("Selected Order Quantity greater than Available Items.", {variant: "error"});
             return;
         }
         dispatch(changeQuantity(value));
@@ -34,6 +36,12 @@ const ProductDetails = memo(({id}) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+
+        if (!quantity) {
+            enqueueSnackbar("Quantity is required", {variant: "error"});
+            return;
+        }
+
         dispatch(addOrder(product, quantity));
         dispatch(changeOrderStep(1));
         navigate(generatePath("/products/:id/order", {id}));
@@ -117,7 +125,7 @@ const ProductDetails = memo(({id}) => {
                             name="quantity"
                             label="Enter Quantity"
                             id="quantity"
-                            value={quantity ? quantity : 1}
+                            value={quantity}
                             onChange={onQuantityChange}
                             autoComplete="quantity"
                             sx={{maxWidth: "60%"}}

@@ -1,5 +1,5 @@
 import {Box, InputLabel, ToggleButton, ToggleButtonGroup} from "@mui/material";
-import {memo, useEffect, useState} from "react";
+import {memo, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {setFilter} from "../../common/store/actions/productActions";
 import Select from "react-select";
@@ -21,6 +21,22 @@ const Products = memo(() => {
         {value: 'price-low-to-high', label: 'Price: Low to High'},
         {value: 'newest', label: 'Newest'}
     ]
+
+    const getSortedProducts = () => {
+
+        const sortValue = sort.value;
+        const productsToSort = [...products];
+
+        if (sortValue === options[1].value) {
+            productsToSort.sort((p1, p2) => p2.price - p1.price);
+        } else if (sortValue === options[2].value) {
+            productsToSort.sort((p1, p2) => p1.price - p2.price);
+        } else if (sortValue === options[3].value) {
+            productsToSort.sort((p1, p2) => p1.id > p2.id ? -1 : p2.id > p1.id ? 1 : 0);
+        }
+
+        return productsToSort;
+    }
 
     return (
         <>
@@ -55,7 +71,7 @@ const Products = memo(() => {
                 <InputLabel sx={{fontFamily: "inherit", fontWeight: "500"}}>Sort By:</InputLabel>
                 <Select options={options}
                         value={sort}
-                        onChange={(selectedOption) => setSort(selectedOption)}/>
+                        onChange={setSort}/>
             </Box>
             <Box
                 style={{
@@ -67,7 +83,7 @@ const Products = memo(() => {
                     padding: "2rem 8rem",
                 }}
             >
-                {products.filter(product => filter.toUpperCase() === 'ALL' ? true : filter.toUpperCase() === product.category.toUpperCase())
+                {getSortedProducts().filter(product => filter.toUpperCase() === 'ALL' ? true : filter.toUpperCase() === product.category.toUpperCase())
                     .map(product => {
                         return <Product key={product.id} product={product}/>;
                 })}

@@ -1,7 +1,7 @@
 const initState = {
     product: null,
     address: null,
-    quantity: 0,
+    quantity: 1,
     totalOrder: 0,
     activeStepNumber: 1
 }
@@ -35,7 +35,7 @@ export default function (state = initState, action) {
             return {
                 product: null,
                 address: null,
-                quantity: 0,
+                quantity: 1,
                 totalOrder: 0,
                 activeStepNumber: 1
             }

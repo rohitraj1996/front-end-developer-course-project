@@ -13,7 +13,7 @@ export default function (state = initState, action) {
         case "LOAD_PRODUCTS": {
             return {
                 ...state,
-                products: action.products,
+                products: [...action.products],
                 errorWhileLoadingProducts: action.errorWhileLoadingProducts
             }
         }

@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import {useContext, useEffect} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {changeOrderStep} from "../../common/store/actions/orderActions";
+import {changeOrderStep, deleteOrder} from "../../common/store/actions/orderActions";
 import useAuthentication from "../../useAuthentication";
 import axios from "axios";
 import {useSnackbar} from "notistack";
@@ -48,6 +48,7 @@ const ConfirmOrder = ({setActiveStep}) => {
         axios.post("http://localhost:8080/api/orders", payload, {headers: headers})
             .then(response => {
                 dispatch(setFilter("ALL"));
+                dispatch(deleteOrder());
                 enqueueSnackbar("Order placed successfully", {variant: "success"})
                 navigate("/");
             })
