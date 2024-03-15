@@ -28,6 +28,14 @@
   color: #61dafb;
 }
 
+.notistack-SnackbarContainer {
+  width: 25% !important;
+}
+
+.react-router-dom-link {
+  color: inherit;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

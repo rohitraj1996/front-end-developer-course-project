@@ -3,12 +3,30 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import useAuthentication from "./useAuthentication";
+import {Provider} from "react-redux";
+import store, {persistor} from "./common/store";
+import {PersistGate} from "redux-persist/integration/react";
+
+
+function ConnectedApp() {
+    const {AuthProvider} = useAuthentication();
+    return (
+        <Provider store={store}>
+            <PersistGate persistor={persistor} loading={null}>
+                <AuthProvider>
+                    <App/>
+                </AuthProvider>
+            </PersistGate>
+        </Provider>
+    );
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <ConnectedApp/>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
