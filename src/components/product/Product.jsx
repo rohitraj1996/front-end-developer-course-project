@@ -54,7 +54,7 @@ const Product = memo(({product}) => {
                     {product.description}
                 </Typography>
             </CardContent>
-            <Box style={{"flex-grow": "1"}}/>
+            <Box style={{"flexGrow": "1"}}/>
             <Toolbar
                 sx={{
                     justifyContent: "space-between",
@@ -72,7 +72,9 @@ const Product = memo(({product}) => {
                 </CardActions>
                 {user.token && user.roles.includes("ADMIN") ?
                     <Stack direction="row" alignItems="center">
-                        <IconButton onClick={(e) => console.log("Edit Clicked " + e)} aria-label="edit">
+                        <IconButton
+                            onClick={() => navigate(generatePath("/products/:id/edit", {id: product.id}))}
+                            aria-label="edit">
                             <EditIcon/>
                         </IconButton>
                         <IconButton onClick={(e) => console.log("Delete clicked " + e)} aria-label="delete">

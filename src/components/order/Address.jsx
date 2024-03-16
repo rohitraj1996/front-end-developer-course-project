@@ -1,4 +1,4 @@
-import {Box, Button, Container, Grid, InputLabel, TextField, Typography} from "@mui/material";
+import {Box, Button, Container, FormControl, Grid, InputLabel, TextField, Typography} from "@mui/material";
 import Select from "react-select";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
@@ -18,16 +18,18 @@ const Address = ({setActiveStep}) => {
     const {user} = useContext(AuthCtx);
     const navigate = useNavigate();
     const [options, setOptions] = useState([]);
-    const { enqueueSnackbar } = useSnackbar()
+    const {enqueueSnackbar} = useSnackbar()
     const dispatch = useDispatch();
 
     const fetchAddress = () => {
         const userId = user.id ? user.id : "65ed74ecc5bd2539d2ba66d7";
 
-        axios.get("http://localhost:8080/api/addresses", { headers: {
+        axios.get("http://localhost:8080/api/addresses", {
+            headers: {
                 'Content-Type': 'application/json',
                 "Authorization": `Bearer ${user.token}`
-            }})
+            }
+        })
             .then(response => {
                 const userAddresses = response?.data?.filter(address => address.user === userId);
                 if (userAddresses?.length > 0) {
@@ -68,7 +70,9 @@ const Address = ({setActiveStep}) => {
             .then(data => {
                 fetchAddress();
             })
-            .catch(err => {enqueueSnackbar("Error while saving address.", {variant: "error"})})
+            .catch(err => {
+                enqueueSnackbar("Error while saving address.", {variant: "error"})
+            })
 
         event.currentTarget.reset();
     }
@@ -94,10 +98,12 @@ const Address = ({setActiveStep}) => {
                 <Grid item xs={6}>
                     <Box sx={{marginX: 8, marginY: 2}}>
                         <InputLabel sx={{fontFamily: "inherit", fontWeight: "500"}}>Select Address</InputLabel>
-                        <Select options={options}
-                                value={address}
-                                defaultValue={address}
-                                onChange={(selectedOption) => dispatch(setAddress(selectedOption))}/>
+                        <FormControl sx={{minWidth: "100%", zIndex: 2}}>
+                            <Select options={options}
+                                    value={address}
+                                    defaultValue={address}
+                                    onChange={(selectedOption) => dispatch(setAddress(selectedOption))}/>
+                        </FormControl>
                     </Box>
                 </Grid>
             </Grid>

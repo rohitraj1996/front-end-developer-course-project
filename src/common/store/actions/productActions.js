@@ -32,18 +32,78 @@ export const loadProducts = () => dispatch => {
     });
 };
 
-export const addProduct = (product) => {
-    return {
-        type: "ADD_PRODUCT",
-        product
+export const addProduct = (product, token, successCallback, errorCallback) => dispatch => {
+
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
     }
+
+    axios.post("http://localhost:8080/api/products", product, {headers}).then(res => {
+
+        if (res.data) {
+            product.id = res.data;
+        }
+
+        if (typeof successCallback === 'function') {
+            successCallback();
+        }
+
+        dispatch({
+            type: "ADD_PRODUCT",
+            product: {...product}
+        });
+    }).catch(err => {
+
+        let message = "Error while adding product.";
+
+        if (err.response) {
+            message = `${message} Status: ${err.response.status}, Message: ${err.response.data}`;
+        } else {
+            message = `${message} Error: ${err.message}`;
+        }
+
+        if (typeof errorCallback === 'function') {
+            errorCallback(message);
+        }
+    });
 }
 
-export const editProduct = product => {
-    return {
-        type: "EDIT_PRODUCT",
-        product
+export const editProduct = (product, token, successCallback, errorCallback) => dispatch => {
+
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
     }
+
+    axios.put("http://localhost:8080/api/products/" + product.id, product, {headers}).then(res => {
+
+        if (res.data) {
+            product.id = res.data;
+        }
+
+        if (typeof successCallback === 'function') {
+            successCallback();
+        }
+
+        dispatch({
+            type: "EDIT_PRODUCT",
+            product: {...product}
+        });
+    }).catch(err => {
+
+        let message = "Error while editing product.";
+
+        if (err.response) {
+            message = `${message} Status: ${err.response.status}, Message: ${err.response.data}`;
+        } else {
+            message = `${message} Error: ${err.message}`;
+        }
+
+        if (typeof errorCallback === 'function') {
+            errorCallback(message);
+        }
+    });
 }
 
 export const deleteProduct = (id) => {

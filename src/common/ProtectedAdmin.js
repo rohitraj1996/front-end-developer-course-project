@@ -1,21 +1,18 @@
-import React from "react";
-import { Route, Navigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
-const ProtectedAdmin = ({ token, roles, children, ...rest }) => (
-  <Route
-    {...rest}
-    render={({ location }) =>
-        token && roles?.includes("ADMIN") ? (
-        children
-      ) : (
-        <Navigate
-          to="/signin"
-          state={{ from: location }}
-          replace={true}
-        />
-      )
-    }
-  />
-);
+const ProtectedAdmin = ({children}) => {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user?.token || !user?.roles?.includes("ADMIN")) {
+            navigate("/signin");
+        }
+    }, []);
+
+    return children
+};
 
 export default ProtectedAdmin;

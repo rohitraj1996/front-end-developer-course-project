@@ -4,8 +4,7 @@ import Navigation from "./common/navigation/Navigation";
 import {Box, IconButton} from "@mui/material";
 import SignIn from "./components/sign-in/SignIn";
 import SignUp from "./components/sign-up/SignUp";
-import useAuthentication from "./useAuthentication";
-import {useContext, useEffect} from "react";
+import {useEffect} from "react";
 import Products from "./components/products/Products";
 import ProtectedUser from "./common/ProtectedUser";
 import {loadCategories, loadProducts} from "./common/store/actions/productActions";
@@ -13,10 +12,11 @@ import {useDispatch} from "react-redux";
 import Order from "./components/order/Order";
 import {closeSnackbar, SnackbarProvider} from "notistack";
 import ClearIcon from "@mui/icons-material/Clear";
+import ProtectedAdmin from "./common/ProtectedAdmin";
+import ProductForm from "./components/product-form/ProductForm";
 
 function App() {
-    const {AuthCtx} = useAuthentication();
-    const {user} = useContext(AuthCtx);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -40,7 +40,7 @@ function App() {
                                       }}>
                         <Routes>
                             <Route path={"/"} exact element={
-                                <ProtectedUser roles={user.roles} token={user.token}>
+                                <ProtectedUser>
                                     <Products/>
                                 </ProtectedUser>
                             }/>
@@ -48,14 +48,24 @@ function App() {
                             <Route path={"/signin"} element={<SignIn/>}/>
                             <Route path={"/signup"} element={<SignUp/>}/>
                             <Route path={"/products/:id"} element={
-                                <ProtectedUser roles={user.roles} token={user.token}>
+                                <ProtectedUser>
                                     <Products/>
                                 </ProtectedUser>
                             }/>
                             <Route path={"/products/:id/order"} element={
-                                <ProtectedUser roles={user.roles} token={user.token}>
+                                <ProtectedUser>
                                     <Order/>
                                 </ProtectedUser>
+                            }/>
+                            <Route path={"/products/:id/edit"} element={
+                                <ProtectedAdmin>
+                                    <ProductForm/>
+                                </ProtectedAdmin>
+                            }/>
+                            <Route path={"/products/add"} element={
+                                <ProtectedAdmin>
+                                    <ProductForm/>
+                                </ProtectedAdmin>
                             }/>
                         </Routes>
                     </SnackbarProvider>

@@ -19,13 +19,26 @@ export default function (state = initState, action) {
         }
 
         case "ADD_PRODUCT": {
-            state.products.push(action.products);
-            return state;
+            return {
+                ...state,
+                products: [...state.products, action.product]
+            };
         }
 
         case "EDIT_PRODUCT": {
-            state.products[action.product.id] = action.product;
-            return state;
+            return {
+                ...state,
+                products: state.products.map(p => {
+                    if (p.id === action.product.id) {
+                        return {
+                            ...p,
+                            ...action.product
+                        };
+                    } else {
+                        return p
+                    }
+                })
+            };
         }
 
         case "DELETE_PRODUCT": {

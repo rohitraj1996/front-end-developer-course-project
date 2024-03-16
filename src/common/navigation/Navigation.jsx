@@ -5,7 +5,7 @@ import StyledInputBase from "../search-bar/StyledInputBase";
 import SearchIconWrapper from "../search-bar/SearchIconWrapper";
 import Search from "../search-bar/Search";
 import {Link, useNavigate} from "react-router-dom";
-import {useContext, useEffect, useRef, useState} from "react";
+import {useContext, useRef} from "react";
 import useAuthentication from "../../useAuthentication";
 import {deleteOrder} from "../store/actions/orderActions";
 import {useDispatch} from "react-redux";
@@ -47,9 +47,9 @@ const Navigation = () => {
                            alignItems="start" spacing={4}>
                         <Link to={"/"} className={"react-router-dom-link"}>Home</Link>
                         {user?.roles?.includes("ADMIN") ?
-                            <Link to={"/"} className={"react-router-dom-link"}>Add Product</Link> : null}
+                            <Link to={"/products/add"} className={"react-router-dom-link"}>Add Product</Link> : null}
                         {!user?.token ? <><Link to={"/signin"} className={"react-router-dom-link"}>Login</Link>
-                            <Link to={"signup"} className={"react-router-dom-link"}>Sign Up</Link></> : null}
+                            <Link to={"/signup"} className={"react-router-dom-link"}>Sign Up</Link></> : null}
                         {user?.token ? <Button variant="contained" color="error" onClick={event => {
                             event.preventDefault();
                             dispatch(deleteOrder());
