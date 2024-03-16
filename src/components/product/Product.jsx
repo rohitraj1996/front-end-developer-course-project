@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Typography from '@mui/material/Typography';
 import {memo, useContext} from "react";
-import {Box, Grid, IconButton, Stack, Toolbar} from "@mui/material";
+import {Grid, IconButton, Stack, Toolbar} from "@mui/material";
 import useAuthentication from "../../useAuthentication";
 import {generatePath, useNavigate} from "react-router-dom";
 
@@ -20,8 +20,9 @@ const Product = memo(({product}) => {
     return (
         <Card
             sx={{
-                width: "18rem",
-                height: "24",
+                maxWidth: 300,
+                width: 300,
+                height: "390px",
                 flexDirection: "column",
                 display: "flex",
             }}
@@ -29,11 +30,11 @@ const Product = memo(({product}) => {
             <CardMedia
                 component={"img"}
                 alt={product.name}
-                sx={{height: 250}}
+                sx={{height: 190}}
                 image={product.imageUrl}
                 title={product.name}
             />
-            <CardContent>
+            <CardContent sx={{height: 110, overflowY: "scroll"}}>
                 <Grid justifyContent="center"
                       alignItems="flex-start"
                       container>
@@ -49,12 +50,10 @@ const Product = memo(({product}) => {
                 <Typography
                     variant="body2"
                     color="text.secondary"
-                    style={{height: "9rem", overflow: "hidden"}}
                 >
                     {product.description}
                 </Typography>
             </CardContent>
-            <Box style={{"flexGrow": "1"}}/>
             <Toolbar
                 sx={{
                     justifyContent: "space-between",

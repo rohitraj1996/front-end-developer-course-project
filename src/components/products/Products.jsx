@@ -1,4 +1,4 @@
-import {Box, InputLabel, ToggleButton, ToggleButtonGroup} from "@mui/material";
+import {Box, Container, InputLabel, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {memo, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {setFilter} from "../../common/store/actions/productActions";
@@ -67,28 +67,31 @@ const Products = memo(() => {
                 </ToggleButtonGroup>
             </Box>
             {id? <ProductDetails id={id}/> : <>
-            <Box sx={{marginX: 8, marginY: 2, maxWidth: "16rem"}}>
+                <Box sx={{marginX: 8, marginY: 1, maxWidth: "18rem"}}>
                 <InputLabel sx={{fontFamily: "inherit", fontWeight: "500"}}>Sort By:</InputLabel>
                 <Select options={options}
                         value={sort}
                         onChange={setSort}/>
             </Box>
-            <Box
-                style={{
-                    display: "flex",
-                    width: "100%",
-                    flexWrap: "wrap",
-                    gap: 40,
-                    justifyContent: "center",
-                    padding: "2rem 8rem",
-                }}
-            >
-                {getSortedProducts().filter(product => filter.toUpperCase() === 'ALL' ? true : filter.toUpperCase() === product.category.toUpperCase())
-                    .map(product => {
-                        return <Product key={product.id} product={product}/>;
-                })}
+                <Container>
+                    <Box
+                        style={{
+                            display: "flex",
+                            width: "100%",
+                            flexWrap: "wrap",
+                            gap: 100,
+                            justifyContent: "space-evenly",
+                            paddingTop: "2rem",
+                        }}
+                    >
+                        {getSortedProducts().filter(product => filter.toUpperCase() === 'ALL' ? true : filter.toUpperCase() === product.category.toUpperCase())
+                            .map(product => {
+                                return <Product key={product.id} product={product}/>;
+                            })}
 
-            </Box></>}
+                    </Box>
+                </Container>
+            </>}
         </>
     );
 });
