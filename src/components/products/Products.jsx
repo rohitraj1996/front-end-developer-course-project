@@ -11,7 +11,14 @@ const Products = memo(() => {
 
     const dispatch = useDispatch();
     const {id} = useParams();
-    const {products, errorWhileLoadingProducts, categories, errorWhileLoadingCategories, filter} = useSelector(
+    const {
+        products,
+        errorWhileLoadingProducts,
+        categories,
+        errorWhileLoadingCategories,
+        filter,
+        searchKeyword
+    } = useSelector(
         state => state.products, shallowEqual
     );
     const [sort, setSort] = useState([]);
@@ -33,6 +40,10 @@ const Products = memo(() => {
             productsToSort.sort((p1, p2) => p1.price - p2.price);
         } else if (sortValue === options[3].value) {
             productsToSort.sort((p1, p2) => p1.id > p2.id ? -1 : p2.id > p1.id ? 1 : 0);
+        }
+
+        if (searchKeyword) {
+            return productsToSort.filter(p => p.name?.toLowerCase().includes(searchKeyword))
         }
 
         return productsToSort;

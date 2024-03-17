@@ -1,23 +1,32 @@
-import {AppBar, Box, Button, IconButton, Stack, Toolbar, Typography} from "@mui/material";
+import {AppBar, Box, Button, debounce, IconButton, Stack, Toolbar, Typography} from "@mui/material";
 import {ShoppingCart} from "@mui/icons-material";
 import SearchIcon from '@mui/icons-material/Search';
 import StyledInputBase from "../search-bar/StyledInputBase";
 import SearchIconWrapper from "../search-bar/SearchIconWrapper";
 import Search from "../search-bar/Search";
 import {Link, useNavigate} from "react-router-dom";
-import {useContext, useRef} from "react";
+import {useContext, useEffect} from "react";
 import useAuthentication from "../../useAuthentication";
 import {deleteOrder} from "../store/actions/orderActions";
 import {useDispatch} from "react-redux";
+import {setSearch} from "../store/actions/productActions";
 
 
 const Navigation = () => {
-    const searchInput = useRef("");
 
     const {AuthCtx} = useAuthentication();
     const {user, logOut} = useContext(AuthCtx);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const searchProduct = debounce((keyword) => {
+        console.log(keyword);
+        dispatch(setSearch(keyword))
+    }, 400);
+
+    useEffect(() => {
+        dispatch(setSearch(null));
+    }, [dispatch]);
 
     return (
 
@@ -36,7 +45,7 @@ const Navigation = () => {
                             type="string"
                             placeholder="Search…"
                             inputProps={{'aria-label': 'search'}}
-                            ref={searchInput}
+                            onChange={e => searchProduct(e.target.value)}
                         />
                     </Search>
                 </Box>

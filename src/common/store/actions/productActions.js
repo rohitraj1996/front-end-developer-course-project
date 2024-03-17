@@ -177,3 +177,10 @@ export const setFilter = category => {
         filter: category
     };
 };
+
+export const setSearch = searchKeyword => {
+    return {
+        type: "SET_SEARCH",
+        searchKeyword
+    };
+};

@@ -3,7 +3,8 @@ const initState = {
     errorWhileLoadingProducts: null,
     categories: ["ALL"],
     errorWhileLoadingCategories: null,
-    filter: "ALL"
+    filter: "ALL",
+    searchKeyword: null
 }
 
 export default function (state = initState, action) {
@@ -60,6 +61,13 @@ export default function (state = initState, action) {
             return {
                 ...state,
                 filter: action.filter
+            }
+        }
+
+        case "SET_SEARCH": {
+            return {
+                ...state,
+                searchKeyword: action.searchKeyword
             }
         }
 
