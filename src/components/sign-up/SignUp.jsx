@@ -186,7 +186,9 @@ const SignUp = () => {
                                     value={fName}
                                     error={!isFNameValid}
                                     helperText={!isFNameValid ? "Please enter value" : ""}
-                                    onChange={(event => {validateForm(event, "FIRST_NAME")})}
+                                    onChange={(event => {
+                                        validateForm(event, "FIRST_NAME")
+                                    })}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -200,7 +202,9 @@ const SignUp = () => {
                                     value={lName}
                                     error={!isLNameValid}
                                     helperText={!isLNameValid ? "Please enter value" : ""}
-                                    onChange={(event => {validateForm(event, "LAST_NAME")})}
+                                    onChange={(event => {
+                                        validateForm(event, "LAST_NAME")
+                                    })}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -214,7 +218,9 @@ const SignUp = () => {
                                     value={email}
                                     error={!isEmailValid}
                                     helperText={!isEmailValid ? "Please enter value" : ""}
-                                    onChange={(event => {validateForm(event, "EMAIL")})}
+                                    onChange={(event => {
+                                        validateForm(event, "EMAIL")
+                                    })}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -229,7 +235,9 @@ const SignUp = () => {
                                     value={password}
                                     error={!isPasswordValid}
                                     helperText={!isPasswordValid ? "Please enter value" : ""}
-                                    onChange={(event => {validateForm(event, "PASSWORD")})}
+                                    onChange={(event => {
+                                        validateForm(event, "PASSWORD")
+                                    })}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -244,7 +252,9 @@ const SignUp = () => {
                                     value={cPassword}
                                     error={!isCPasswordValid}
                                     helperText={!isCPasswordValid ? cPasswordErrorMessage : ""}
-                                    onChange={(event => {validateForm(event, "C_PASSWORD")})}
+                                    onChange={(event => {
+                                        validateForm(event, "C_PASSWORD")
+                                    })}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -259,7 +269,9 @@ const SignUp = () => {
                                     value={contact}
                                     error={!isContactNumberValid}
                                     helperText={!isContactNumberValid ? "Please enter value" : ""}
-                                    onChange={(event => {validateForm(event, "CONTACT")})}
+                                    onChange={(event => {
+                                        validateForm(event, "CONTACT")
+                                    })}
                                 />
                             </Grid>
                         </Grid>
@@ -267,7 +279,11 @@ const SignUp = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{mt: 3, mb: 2, backgroundColor: "#3f51b5"}}
+                            sx={{
+                                mt: 3, mb: 2, backgroundColor: "#3f51b5", "&:hover": {
+                                    backgroundColor: "#3f51b5"
+                                }
+                            }}
                         >
                             Sign Up
                         </Button>

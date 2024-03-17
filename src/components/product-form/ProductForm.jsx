@@ -260,7 +260,11 @@ const ProductForm = () => {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{mt: 3, mb: 2, backgroundColor: "#3f51b5"}}
+                        sx={{
+                            mt: 3, mb: 2, backgroundColor: "#3f51b5", "&:hover": {
+                                backgroundColor: "#3f51b5"
+                            }
+                        }}
                         onClick={onSubmit}
                     >
                         {!id ? "Save" : "Modify"} Product

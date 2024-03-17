@@ -42,8 +42,10 @@ export default function (state = initState, action) {
         }
 
         case "DELETE_PRODUCT": {
-            state.products.filter(product => product.id !== action.id);
-            return state;
+            return {
+                ...state,
+                products: state.products.filter(product => product.id !== action.id)
+            };
         }
 
         case "LOAD_CATEGORIES": {

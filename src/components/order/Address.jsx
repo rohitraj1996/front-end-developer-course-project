@@ -191,7 +191,11 @@ const Address = ({setActiveStep}) => {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{mt: 3, mb: 2, backgroundColor: "#3f51b5", marginTop: "0.90rem"}}
+                            sx={{
+                                mt: 3, mb: 2, backgroundColor: "#3f51b5", marginTop: "0.90rem", "&:hover": {
+                                    backgroundColor: "#3f51b5"
+                                }
+                            }}
                         >
                             Save Address
                         </Button>
@@ -213,7 +217,11 @@ const Address = ({setActiveStep}) => {
                 <Button
                     onClick={nextOnClick}
                     variant="contained"
-                    sx={{backgroundColor: "#3f51b5"}}
+                    sx={{
+                        backgroundColor: "#3f51b5", "&:hover": {
+                            backgroundColor: "#3f51b5"
+                        }
+                    }}
                 >
                     Next
                 </Button>

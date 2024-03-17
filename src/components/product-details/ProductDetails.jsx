@@ -137,7 +137,11 @@ const ProductDetails = memo(({id}) => {
                             fullWidth
                             variant="contained"
                             onClick={onSubmit}
-                            sx={{maxWidth: "30%", backgroundColor: "#3f51b5"}}
+                            sx={{
+                                maxWidth: "30%", backgroundColor: "#3f51b5", "&:hover": {
+                                    backgroundColor: "#3f51b5"
+                                }
+                            }}
                         >
                             Place Order
                         </Button>

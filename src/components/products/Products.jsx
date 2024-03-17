@@ -1,4 +1,4 @@
-import {Box, Container, InputLabel, ToggleButton, ToggleButtonGroup} from "@mui/material";
+import {Box, Container, Grid, InputLabel, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import {memo, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {setFilter} from "../../common/store/actions/productActions";
@@ -73,23 +73,20 @@ const Products = memo(() => {
                         value={sort}
                         onChange={setSort}/>
             </Box>
-                <Container>
-                    <Box
-                        style={{
-                            display: "flex",
-                            width: "100%",
-                            flexWrap: "wrap",
-                            gap: 100,
-                            justifyContent: "space-evenly",
-                            paddingTop: "2rem",
-                        }}
+                <Container maxWidth="xl">
+                    <Grid container spacing={4}
+                          direction={"row"}
+                          alignItems={"center"}
+                          justifyContent={"space-around"}
+                          sx={{width: "100%", marginLeft: "0px", marginTop: "-10px"}}
                     >
                         {getSortedProducts().filter(product => filter.toUpperCase() === 'ALL' ? true : filter.toUpperCase() === product.category.toUpperCase())
                             .map(product => {
-                                return <Product key={product.id} product={product}/>;
+                                return <Grid key={product.id} item xs={12} sm={6} md={4} xl={3}><Product
+                                    product={product}/></Grid>;
                             })}
 
-                    </Box>
+                    </Grid>
                 </Container>
             </>}
         </>

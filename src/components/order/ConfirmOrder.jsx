@@ -20,7 +20,7 @@ const ConfirmOrder = ({setActiveStep}) => {
     );
 
     const dispatch = useDispatch();
-    const { enqueueSnackbar } = useSnackbar()
+    const {enqueueSnackbar} = useSnackbar()
 
     useEffect(() => {
         if (!product) {
@@ -148,7 +148,11 @@ const ConfirmOrder = ({setActiveStep}) => {
                 <Button onClick={() => setActiveStep(1)} variant="text">
                     BACK
                 </Button>
-                <Button onClick={onClickPlaceOrder} variant="contained" type="submit" sx={{backgroundColor: "#3f51b5"}}>
+                <Button onClick={onClickPlaceOrder} variant="contained" type="submit" sx={{
+                    backgroundColor: "#3f51b5", "&:hover": {
+                        backgroundColor: "#3f51b5"
+                    }
+                }}>
                     Place Order
                 </Button>
             </Grid>

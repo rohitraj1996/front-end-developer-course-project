@@ -106,11 +106,37 @@ export const editProduct = (product, token, successCallback, errorCallback) => d
     });
 }
 
-export const deleteProduct = (id) => {
-    return {
-        type: "DELETE_PRODUCT",
-        id
+export const deleteProduct = (id, token, successCallback, errorCallback) => dispatch => {
+
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
     }
+
+    axios.delete("http://localhost:8080/api/products/" + id, {headers}).then(res => {
+
+        if (typeof successCallback === 'function') {
+            successCallback();
+        }
+
+        dispatch({
+            type: "DELETE_PRODUCT",
+            id
+        });
+    }).catch(err => {
+
+        let message = "Error while deleting product.";
+
+        if (err.response) {
+            message = `${message} Status: ${err.response.status}, Message: ${err.response.data}`;
+        } else {
+            message = `${message} Error: ${err.message}`;
+        }
+
+        if (typeof errorCallback === 'function') {
+            errorCallback(message);
+        }
+    });
 }
 
 export const loadCategories = () => dispatch => {
