@@ -1,4 +1,4 @@
-import {Button, Chip, Grid, TextField} from "@mui/material";
+import {Button, Chip, Grid, TextField, Typography} from "@mui/material";
 import {memo, useEffect, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {addOrder, changeOrderStep, changeQuantity} from "../../common/store/actions/orderActions";
@@ -58,14 +58,14 @@ const ProductDetails = memo(() => {
 
     return (
         (product && <Grid
-            sx={{margin: "2%"}}
+            sx={{margin: "5%"}}
             justifyContent="center"
             alignItems="flex-start"
             container
             spacing={2}
         >
 
-        <Grid item xs={3} sx={{padding: 5}}>
+            <Grid item xs={3} sx={{padding: 5}}>
                 <img
                     style={{maxWidth: "-webkit-fill-available", borderRadius: "5%"}}
                     src={product.imageUrl}
@@ -86,8 +86,10 @@ const ProductDetails = memo(() => {
                             container
                             spacing={2}
                         >
-                            <Grid item xs={4}>
-                                <h1>{product.name} </h1>
+                            <Grid item>
+                                <Typography variant={"h4"}>
+                                    {product.name}
+                                </Typography>
                             </Grid>
                             <Grid item xs={4}>
                                 <Chip
@@ -98,7 +100,7 @@ const ProductDetails = memo(() => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={8} sx={{paddingTop: "0px !important"}}>
+                    <Grid item xs={8}>
                         <Grid
                             justifyContent="flex-start"
                             alignItems="center"
@@ -108,8 +110,8 @@ const ProductDetails = memo(() => {
                             <Grid item xs={2}>
                                 Category:
                             </Grid>
-                            <Grid item xs={4}>
-                                <h4>{product.category}</h4>
+                            <Grid item xs={4} sx={{fontWeight: 700}}>
+                                {product.category}
                             </Grid>
                         </Grid>
                     </Grid>

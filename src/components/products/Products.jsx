@@ -75,29 +75,31 @@ const Products = memo(() => {
                     })}
                 </ToggleButtonGroup>
             </Box>
-
             <Box sx={{marginX: 8, marginY: 1, maxWidth: "18rem"}}>
                 <InputLabel sx={{fontFamily: "inherit", fontWeight: "500"}}>Sort By:</InputLabel>
                 <Select options={options}
                         value={sort}
                         onChange={setSort}/>
             </Box>
-                <Container maxWidth="xl">
-                    <Grid container spacing={4}
-                          direction={"row"}
-                          alignItems={"center"}
-                          justifyContent={"space-around"}
-                          sx={{width: "100%", marginLeft: "0px", marginTop: "-10px"}}
-                    >
-                        {getSortedProducts().filter(product => filter.toUpperCase() === 'ALL' ? true : filter.toUpperCase() === product.category.toUpperCase())
-                            .map(product => {
-                                return <Grid key={product.id} item xs={12} sm={6} md={4} xl={3}><Product
-                                    product={product}/></Grid>;
-                            })}
+            <Container maxWidth="xl">
+                <Grid container spacing={4}
+                      direction={"row"}
+                      alignItems={"center"}
+                      justifyContent={"space-around"}
+                      sx={{width: "100%", marginLeft: "0px", marginTop: "-10px"}}
+                >
+                    {getSortedProducts().filter(product => filter.toUpperCase() === 'ALL' ? true : filter.toUpperCase() === product.category.toUpperCase())
+                        .map(product => {
+                            return (
+                                <Grid sx={{display: "flex", justifyContent: "center", paddingLeft: "0px !important"}}
+                                      key={product.id} item xs={12} sm={6} md={4} xl={3}>
+                                    <Product product={product}/>
+                                </Grid>
+                            );
+                        })}
 
-                    </Grid>
-                </Container>
-
+                </Grid>
+            </Container>
         </>
     );
 });

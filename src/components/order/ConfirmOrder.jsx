@@ -1,4 +1,4 @@
-import {Box, Button, Divider, Grid} from "@mui/material";
+import {Box, Button, Divider, Grid, Typography} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import {useContext, useEffect} from "react";
@@ -102,7 +102,9 @@ const ConfirmOrder = ({setActiveStep}) => {
                                     {product?.description}
                                 </Grid>
                                 <Grid item xs={12} style={{color: "red"}}>
-                                    <b>Total Price : &#8377; {totalOrder}</b>
+                                    <Typography variant={"h6"} sx={{fontWeight: 600}}>
+                                        Total Price : &#8377; {totalOrder}
+                                    </Typography>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -138,14 +140,14 @@ const ConfirmOrder = ({setActiveStep}) => {
                 </CardContent>
             </Card>
             <Grid
-                sx={{padding: "1%", marginTop: "2px"}}
+                sx={{padding: 0.6, marginTop: "2px"}}
                 justifyContent="center"
                 alignItems="flex-start"
                 container
                 spacing={2}
             >
-                <Button onClick={() => setActiveStep(1)} variant="text">
-                    BACK
+                <Button onClick={() => setActiveStep(1)} variant="text" sx={{color: "#3f51b5"}}>
+                    <b>BACK</b>
                 </Button>
                 <Button onClick={onClickPlaceOrder} variant="contained" type="submit" sx={{
                     backgroundColor: "#3f51b5", "&:hover": {

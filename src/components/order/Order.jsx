@@ -7,6 +7,7 @@ import ConfirmOrder from "./ConfirmOrder";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {changeOrderStep} from "../../common/store/actions/orderActions";
 import {useNavigate} from "react-router-dom";
+import "./Order.css";
 
 const Order = () => {
 
@@ -31,7 +32,7 @@ const Order = () => {
     return (
         <Grid justifyContent="center"
               alignItems="flex-start"
-              container sx={{backgroundColor: "#f8f8f8"}}>
+              container>
             <Grid item xs={9}>
                 <Card
                     sx={{

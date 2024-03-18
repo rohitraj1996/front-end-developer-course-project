@@ -88,13 +88,13 @@ const Address = ({setActiveStep}) => {
     return (
         <>
             <Grid
-                sx={{padding: "1%"}}
+                sx={{paddingX: "1%"}}
                 justifyContent="center"
                 alignItems="flex-start"
                 container
                 spacing={2}
             >
-                <Grid item xs={6}>
+                <Grid item xs={8.5}>
                     <Box sx={{marginX: 8, marginY: 2}}>
                         <InputLabel sx={{fontFamily: "inherit", fontWeight: "500"}}>Select Address</InputLabel>
                         <FormControl sx={{minWidth: "100%", zIndex: 2}}>
@@ -114,7 +114,10 @@ const Address = ({setActiveStep}) => {
                         alignItems: "center",
                     }}
                 >
-                    <Typography component="h1" variant="h5">
+                    <Typography variant={"body2"} sx={{marginBottom: 2, fontWeight: 600}}>
+                        -OR-
+                    </Typography>
+                    <Typography variant="h6">
                         Add Address
                     </Typography>
                     <Box component="form" onSubmit={saveAddressOnSubmit} sx={{mt: 1}}>
@@ -134,7 +137,7 @@ const Address = ({setActiveStep}) => {
                             name="contact_number"
                             label="Contact Number"
                             id="contact_number"
-                            autoComplete="contact_number"
+                            autoComplete="contact"
                             sx={{marginTop: "0.55rem"}}
                         />
                         <TextField

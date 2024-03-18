@@ -68,7 +68,7 @@ const Product = memo(({product}) => {
                     image={product.imageUrl}
                     title={product.name}
                 />
-                <CardContent sx={{height: 110, overflowY: "scroll"}}>
+                <CardContent sx={{height: 110, overflowY: "auto"}}>
                     <Grid justifyContent="center"
                           alignItems="flex-start"
                           container>
