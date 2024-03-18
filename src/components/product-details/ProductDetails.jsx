@@ -3,14 +3,16 @@ import {memo, useEffect, useState} from "react";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {addOrder, changeOrderStep, changeQuantity} from "../../common/store/actions/orderActions";
 import {generatePath, useNavigate} from "react-router-dom";
-import {useSnackbar} from "notistack";
+import {useParams} from "react-router";
+import {toast} from 'react-toastify';
 
-const ProductDetails = memo(({id}) => {
+const ProductDetails = memo(() => {
+
+    const {id} = useParams();
     const [product, setProduct] = useState();
     const {quantity} = useSelector(state => state.order);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {enqueueSnackbar} = useSnackbar()
 
 
     const {products} = useSelector(
@@ -28,7 +30,7 @@ const ProductDetails = memo(({id}) => {
         const {value} = e.target;
 
         if (product.availableItems < value) {
-            enqueueSnackbar("Selected Order Quantity greater than Available Items.", {variant: "error"});
+            toast.error("Selected Order Quantity greater than Available Items.");
             return;
         }
         dispatch(changeQuantity(value));
@@ -38,7 +40,7 @@ const ProductDetails = memo(({id}) => {
         e.preventDefault();
 
         if (!quantity) {
-            enqueueSnackbar("Quantity is required", {variant: "error"});
+            toast.error("Quantity is required");
             return;
         }
 
@@ -55,7 +57,8 @@ const ProductDetails = memo(({id}) => {
             container
             spacing={2}
         >
-            <Grid item xs={3} sx={{padding: 5}}>
+
+        <Grid item xs={3} sx={{padding: 5}}>
                 <img
                     style={{maxWidth: "-webkit-fill-available", borderRadius: "5%"}}
                     src={product.imageUrl}

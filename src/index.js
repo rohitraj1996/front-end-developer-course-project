@@ -7,12 +7,15 @@ import useAuthentication from "./useAuthentication";
 import {Provider} from "react-redux";
 import store, {persistor} from "./common/store";
 import {PersistGate} from "redux-persist/integration/react";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function ConnectedApp() {
     const {AuthProvider} = useAuthentication();
     return (
         <Provider store={store}>
+            <ToastContainer icon={false} autoClose={5000} position={"top-right"} theme={"colored"}/>
             <PersistGate persistor={persistor} loading={null}>
                 <AuthProvider>
                     <App/>

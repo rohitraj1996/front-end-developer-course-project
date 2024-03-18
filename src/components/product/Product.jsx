@@ -13,14 +13,13 @@ import {generatePath, useNavigate} from "react-router-dom";
 import {deleteProduct} from "../../common/store/actions/productActions";
 import {useDispatch} from "react-redux";
 import CustomDialog from "../../common/custom-dialog/CustomDialog";
-import {useSnackbar} from "notistack";
+import {toast} from "react-toastify";
 
 const Product = memo(({product}) => {
     const {AuthCtx} = useAuthentication();
     const {user} = useContext(AuthCtx);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {enqueueSnackbar} = useSnackbar()
 
     const [showDialog, setShowDialog] = useState(false);
 
@@ -40,8 +39,13 @@ const Product = memo(({product}) => {
     const onClickOkDialogCallback = (setOpen) => {
         dispatch(deleteProduct(product.id, user.token, () => {
             closeDialog(setOpen);
-            enqueueSnackbar(`Product ${product.name} deleted successfully`, {variant: "success"});
-        }, () => closeDialog(setOpen)));
+            toast.success(`Product ${product.name} deleted successfully`);
+        }, (message) => {
+            closeDialog(setOpen);
+            if (message) {
+                toast.error(message);
+            }
+        }));
     }
 
     return (

@@ -4,9 +4,9 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useContext, useEffect, useState} from "react";
 import useAuthentication from "../../useAuthentication";
-import {useSnackbar} from "notistack";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {setAddress} from "../../common/store/actions/orderActions";
+import {toast} from "react-toastify";
 
 const Address = ({setActiveStep}) => {
 
@@ -18,7 +18,6 @@ const Address = ({setActiveStep}) => {
     const {user} = useContext(AuthCtx);
     const navigate = useNavigate();
     const [options, setOptions] = useState([]);
-    const {enqueueSnackbar} = useSnackbar()
     const dispatch = useDispatch();
 
     const fetchAddress = () => {
@@ -71,7 +70,7 @@ const Address = ({setActiveStep}) => {
                 fetchAddress();
             })
             .catch(err => {
-                enqueueSnackbar("Error while saving address.", {variant: "error"})
+                toast.error("Error while saving address.")
             })
 
         event.currentTarget.reset();
@@ -80,7 +79,7 @@ const Address = ({setActiveStep}) => {
     const nextOnClick = () => {
 
         if (!address) {
-            enqueueSnackbar("Please select address!", {variant: "error"});
+            toast.error("Please select address!");
             return;
         }
         setActiveStep(2);

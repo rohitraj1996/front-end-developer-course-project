@@ -5,8 +5,8 @@ import {Box, Button, Container, FormControl, Grid, TextField, Typography} from "
 import CreatableSelect from "react-select/creatable";
 import {addProduct, editProduct, loadCategories} from "../../common/store/actions/productActions";
 import useAuthentication from "../../useAuthentication";
-import {useSnackbar} from "notistack";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 const FORM_INITIAL_STATE = {
     id: null,
@@ -31,7 +31,6 @@ const ProductForm = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {enqueueSnackbar} = useSnackbar()
 
     const {AuthCtx} = useAuthentication();
     const {user} = useContext(AuthCtx);
@@ -98,7 +97,7 @@ const ProductForm = () => {
     }
 
     const successOnSubmitCallback = (product) => {
-        enqueueSnackbar(`Product ${product.name} ${id ? "modified" : "added"} successfully`, {variant: "success"});
+        toast.success(`Product ${product.name} ${id ? "modified" : "added"} successfully`);
 
         setProduct({...FORM_INITIAL_STATE});
         setSelectedCategory(null);
@@ -112,7 +111,7 @@ const ProductForm = () => {
     }
 
     const errorOnSubmitCallback = (errMsg) => {
-        enqueueSnackbar(`Error while modifying product, ${errMsg}`, {variant: "error"});
+        toast.error(`Error while modifying product, ${errMsg}`);
     }
 
     const onSubmit = (e) => {
@@ -133,7 +132,7 @@ const ProductForm = () => {
 
         if (selectedCategory == null) {
             isValid = false;
-            enqueueSnackbar("Category is mandatory", {variant: "error"});
+            toast.error("Category is mandatory");
         }
 
         if (!isValid) {

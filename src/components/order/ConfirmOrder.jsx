@@ -6,9 +6,9 @@ import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {changeOrderStep, deleteOrder} from "../../common/store/actions/orderActions";
 import useAuthentication from "../../useAuthentication";
 import axios from "axios";
-import {useSnackbar} from "notistack";
 import {useNavigate} from "react-router-dom";
 import {setFilter} from "../../common/store/actions/productActions";
+import {toast} from "react-toastify";
 
 const ConfirmOrder = ({setActiveStep}) => {
 
@@ -20,7 +20,6 @@ const ConfirmOrder = ({setActiveStep}) => {
     );
 
     const dispatch = useDispatch();
-    const {enqueueSnackbar} = useSnackbar()
 
     useEffect(() => {
         if (!product) {
@@ -49,11 +48,11 @@ const ConfirmOrder = ({setActiveStep}) => {
             .then(response => {
                 dispatch(setFilter("ALL"));
                 dispatch(deleteOrder());
-                enqueueSnackbar("Order placed successfully", {variant: "success"})
+                toast.success("Order placed successfully")
                 navigate("/");
             })
             .catch(e => {
-                enqueueSnackbar("Error while placing order", {variant: "error"})
+                toast.error("Error while placing order")
             })
     }
 

@@ -4,13 +4,11 @@ import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {setFilter} from "../../common/store/actions/productActions";
 import Select from "react-select";
 import Product from "../product/Product";
-import {useParams} from "react-router";
-import ProductDetails from "../product-details/ProductDetails";
 
 const Products = memo(() => {
 
     const dispatch = useDispatch();
-    const {id} = useParams();
+
     const {
         products,
         errorWhileLoadingProducts,
@@ -77,8 +75,8 @@ const Products = memo(() => {
                     })}
                 </ToggleButtonGroup>
             </Box>
-            {id? <ProductDetails id={id}/> : <>
-                <Box sx={{marginX: 8, marginY: 1, maxWidth: "18rem"}}>
+
+            <Box sx={{marginX: 8, marginY: 1, maxWidth: "18rem"}}>
                 <InputLabel sx={{fontFamily: "inherit", fontWeight: "500"}}>Sort By:</InputLabel>
                 <Select options={options}
                         value={sort}
@@ -99,7 +97,7 @@ const Products = memo(() => {
 
                     </Grid>
                 </Container>
-            </>}
+
         </>
     );
 });

@@ -6,7 +6,7 @@ import Copyright from "../../common/copyright/Copyright";
 import {useContext, useState} from "react";
 import useAuthentication from "../../useAuthentication";
 import {useNavigate} from "react-router-dom";
-import {useSnackbar} from "notistack";
+import {toast} from "react-toastify";
 
 const defaultTheme = createTheme();
 
@@ -20,10 +20,9 @@ const SignIn = () => {
     const {AuthCtx} = useAuthentication();
     const {login} = useContext(AuthCtx);
     const navigate = useNavigate();
-    const {enqueueSnackbar} = useSnackbar()
 
     const enqueueSnackBarCallBack = (error) => {
-        const key = enqueueSnackbar(error, {variant: "error"})
+        const key = toast.error(error)
         console.log(key);
     }
 
