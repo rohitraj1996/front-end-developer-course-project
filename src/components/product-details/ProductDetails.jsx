@@ -10,6 +10,7 @@ const ProductDetails = memo(() => {
 
     const {id} = useParams();
     const [product, setProduct] = useState();
+    const [isValidQuantity, setIsValidQuantity] = useState(true);
     const {quantity} = useSelector(state => state.order);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -29,10 +30,16 @@ const ProductDetails = memo(() => {
 
         const {value} = e.target;
 
-        if (product.availableItems < value) {
-            toast.error("Selected Order Quantity greater than Available Items.");
+        if (value !== "" && (!isFinite(value) || !(Math.floor(value) == value))) {
+            toast.error("Please input valid number.");
             return;
         }
+
+        if (product.availableItems < value) {
+            toast.error("Selected order quantity greater than available items.");
+            return;
+        }
+        setIsValidQuantity(true);
         dispatch(changeQuantity(value));
     }
 
@@ -40,7 +47,7 @@ const ProductDetails = memo(() => {
         e.preventDefault();
 
         if (!quantity) {
-            toast.error("Quantity is required");
+            setIsValidQuantity(false);
             return;
         }
 
@@ -131,6 +138,8 @@ const ProductDetails = memo(() => {
                             value={quantity}
                             onChange={onQuantityChange}
                             autoComplete="quantity"
+                            error={!isValidQuantity}
+                            helperText={!isValidQuantity && "Mandatory field. Required valid number"}
                             sx={{maxWidth: "60%"}}
                         />
                     </Grid>
