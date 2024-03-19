@@ -1,5 +1,6 @@
 import React, {createContext, useEffect, useState} from "react";
 import $ from 'jquery';
+import {toast} from "react-toastify";
 
 const AuthCtx = createContext();
 
@@ -32,6 +33,38 @@ const useAuthentication = () => {
         }
     }
 
+    const checkForToken = (res) => {
+        if (res?.token) {
+            return res.token
+        }
+
+        toast.error("No 'token' key present in response. Please check if back-end is properly sending response.");
+        return null;
+    }
+
+    const checkForRoles = (res) => {
+
+        if (res?.roles) {
+            return res.roles;
+        }
+
+        toast.error("No 'roles' key present in response. Please check if back-end is properly sending response.");
+        return null;
+    }
+
+    const checkForUserId = (res) => {
+
+        if (res?.id) {
+            return res.id;
+        } else if (res?.user?.id) {
+            return res.user.id;
+        }
+
+        toast.error("No 'id' or 'user.id' key present in response. Please check if back-end is properly " +
+            "sending response.");
+        return null;
+    }
+
     const login = (username, password, successLoginCallback, enqueueSnackbar) => {
         $.ajax({
             type: "POST",
@@ -41,13 +74,32 @@ const useAuthentication = () => {
             async: false,
             success: (data) => {
 
-                const roles = data.roles && data.roles.length > 0 ? data.roles : ["ADMIN"];
+                // ***********************************************************************************************
+                // As there is problem in back-end, only sending token and not user details like id, roles.
+                // Fixing user idd and roles here to fetch and retrieve address for UI to work.
+                // Uncomment if back-end is not giving proper response and also change the value as per
+                // your data and requirement.
+
+                // data.id = "65ed74ecc5bd2539d2ba66d7";
+                // data.roles = ["USER"];
+
+                // ***********************************************************************************************
+
+                const token = checkForToken(data);
+                const roles = checkForRoles(data);
+                const id = checkForUserId(data);
+
+                if (!token || !roles || !id) {
+                    return;
+                }
 
                 const user = {
-                    token: data.token,
+                    ...data,
+                    token: token,
                     roles: roles,
+                    id: id,
                     error: null
-                }
+                };
 
                 setUser(user);
                 localStorage.setItem("user", JSON.stringify(user));
