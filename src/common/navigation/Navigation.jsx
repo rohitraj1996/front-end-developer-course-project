@@ -36,7 +36,7 @@ const Navigation = () => {
                     <ShoppingCart/>
                 </IconButton>
                 <Typography variant={"body1"} sx={{flexGrow: 1}}>upGrad E-Shop</Typography>
-                <Box sx={{width: "30%"}}>
+                {user?.token && <Box sx={{width: "30%"}}>
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon></SearchIcon>
@@ -48,13 +48,13 @@ const Navigation = () => {
                             onChange={e => searchProduct(e.target.value)}
                         />
                     </Search>
-                </Box>
+                </Box>}
                 <Box sx={{flexGrow: 1}}/>
-                <Box sx={{display: {xs: 'none', md: 'flex'}}}>
+                <Box sx={{display: {xs: 'none', md: 'flex', marginRight: "15px"}}}>
                     <Stack sx={{minWidth: "15%", display: "block", textAlign: "end"}}
                            direction="row"
                            alignItems="start" spacing={4}>
-                        <Link to={"/"} className={"react-router-dom-link"}>Home</Link>
+                        {user?.token && <Link to={"/"} className={"react-router-dom-link"}>Home</Link>}
                         {user?.roles?.includes("ADMIN") ?
                             <Link to={"/products/add"} className={"react-router-dom-link"}>Add Product</Link> : null}
                         {!user?.token ? <><Link to={"/signin"} className={"react-router-dom-link"}>Login</Link>

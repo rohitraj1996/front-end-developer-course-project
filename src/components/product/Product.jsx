@@ -10,7 +10,7 @@ import {memo, useContext, useState} from "react";
 import {Grid, IconButton, Stack, Toolbar} from "@mui/material";
 import useAuthentication from "../../useAuthentication";
 import {generatePath, useNavigate} from "react-router-dom";
-import {deleteProduct} from "../../common/store/actions/productActions";
+import {deleteProduct, loadCategories} from "../../common/store/actions/productActions";
 import {useDispatch} from "react-redux";
 import CustomDialog from "../../common/custom-dialog/CustomDialog";
 import {toast} from "react-toastify";
@@ -39,6 +39,7 @@ const Product = memo(({product}) => {
     const onClickOkDialogCallback = (setOpen) => {
         dispatch(deleteProduct(product.id, user.token, () => {
             closeDialog(setOpen);
+            dispatch(loadCategories());
             toast.success(`Product ${product.name} deleted successfully`);
         }, (message) => {
             closeDialog(setOpen);

@@ -127,7 +127,9 @@ const ProductDetails = memo(() => {
                         {product.description}
                     </Grid>
                     <Grid item xs={8} sx={{color: "red"}}>
-                        &#8377; {(quantity ? quantity : 1) * product.price}
+                        <Typography variant={"h5"}>
+                            &#8377; {(quantity ? quantity : 1) * product.price}
+                        </Typography>
                     </Grid>
                     <Grid item xs={8}>
                         <TextField

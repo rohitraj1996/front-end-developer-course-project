@@ -215,14 +215,28 @@ const ProductForm = () => {
                         name="availableItems"
                         label="Available Items"
                         value={product.availableItems}
-                        type="items"
+                        type="number"
                         id="availableItems"
                         onChange={handleOnChangeForTextField}
+                        onBeforeInput={e => {
+                            if (e.data.charCodeAt() < 48 || e.data.charCodeAt() > 57) {
+                                e.preventDefault();
+                            }
+                        }}
                         error={formValidation.availableItems}
                         helperText={formValidation.availableItems && "Mandatory field."}
-                        sx={{marginBottom: "0px"}}
+                        sx={{
+                            marginBottom: "0px",
+                            "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+                                display: "none",
+                            },
+                            "& input[type=number]": {
+                                MozAppearance: "textfield",
+                            }
+                        }}
                     />
                     <TextField
+                        type={"number"}
                         margin="normal"
                         required
                         fullWidth
@@ -231,7 +245,15 @@ const ProductForm = () => {
                         value={product.price}
                         name="price"
                         onChange={handleOnChangeForTextField}
-                        sx={{marginBottom: "0px"}}
+                        sx={{
+                            marginBottom: "0px",
+                            "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+                                display: "none",
+                            },
+                            "& input[type=number]": {
+                                MozAppearance: "textfield",
+                            }
+                        }}
                         error={formValidation.price}
                         helperText={formValidation.price && "Mandatory field."}
                     />
