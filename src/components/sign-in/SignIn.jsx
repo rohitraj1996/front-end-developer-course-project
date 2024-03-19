@@ -63,7 +63,7 @@ const SignIn = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{m: 1, bgcolor: pink[500]}}>
+                    <Avatar sx={{m: 1, backgroundColor: pink[500]}}>
                         <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
@@ -71,6 +71,7 @@ const SignIn = () => {
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
                         <TextField
+                            type={"email"}
                             margin="normal"
                             required
                             fullWidth
@@ -89,7 +90,7 @@ const SignIn = () => {
                                 }
                             }}
                             error={emailError}
-                            helperText={emailError ? "Please enter value" : ""}
+                            helperText={emailError ? "Please enter valid value" : ""}
 
                         />
                         <TextField
@@ -111,7 +112,7 @@ const SignIn = () => {
                                 }
                             }}
                             error={passwordError}
-                            helperText={passwordError ? "Please enter value" : ""}
+                            helperText={passwordError ? "Please enter valid value" : ""}
                         />
                         <Button
                             type="submit"

@@ -131,6 +131,7 @@ const Address = ({setActiveStep}) => {
                             autoComplete="name"
                         />
                         <TextField
+                            type={"number"}
                             margin="normal"
                             required
                             fullWidth
@@ -138,7 +139,15 @@ const Address = ({setActiveStep}) => {
                             label="Contact Number"
                             id="contact_number"
                             autoComplete="contact"
-                            sx={{marginTop: "0.55rem"}}
+                            sx={{
+                                marginTop: "0.55rem",
+                                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+                                    display: "none",
+                                },
+                                "& input[type=number]": {
+                                    MozAppearance: "textfield",
+                                }
+                            }}
                         />
                         <TextField
                             margin="normal"
@@ -180,6 +189,7 @@ const Address = ({setActiveStep}) => {
                             sx={{marginTop: "0.55rem"}}
                         />
                         <TextField
+                            type={"number"}
                             margin="normal"
                             required
                             fullWidth
@@ -187,7 +197,15 @@ const Address = ({setActiveStep}) => {
                             label="Zip Code"
                             id="zipcode"
                             autoComplete="zipcode"
-                            sx={{marginTop: "0.55rem"}}
+                            sx={{
+                                marginTop: "0.55rem",
+                                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+                                    display: "none",
+                                },
+                                "& input[type=number]": {
+                                    MozAppearance: "textfield",
+                                }
+                            }}
                         />
                         <Button
                             type="submit"

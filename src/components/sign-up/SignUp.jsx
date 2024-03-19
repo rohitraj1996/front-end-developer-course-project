@@ -5,10 +5,15 @@ import Copyright from "../../common/copyright/Copyright";
 import {pink} from "@mui/material/colors";
 import {useState} from "react";
 import axios from "axios";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 const defaultTheme = createTheme();
 
 const SignUp = () => {
+
+    const navigate = useNavigate();
+
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [email, setEmail] = useState("")
@@ -23,6 +28,14 @@ const SignUp = () => {
     const [isCPasswordValid, setIsCPasswordValid] = useState(true);
     const [isContactNumberValid, setIsContactNumberValid] = useState(true);
     const [cPasswordErrorMessage, setCPasswordErrorMessage] = useState("");
+
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
 
     const validateForm = (event, key) => {
 
@@ -45,7 +58,7 @@ const SignUp = () => {
         } else if (key === "EMAIL") {
             setEmail(event.target.value);
 
-            if (event.target.value) {
+            if (event.target.value && validateEmail(event.target.value)) {
                 setIsEmailValid(true);
             } else {
                 setIsEmailValid(false);
@@ -148,11 +161,27 @@ const SignUp = () => {
             contactNumber: contact
         }).then(response => {
             if (response.status === 200) {
-                console.log(response.data);
+                navigate("/");
+
+                if (response.data?.message) {
+                    toast.success(response.data?.message);
+                } else {
+                    toast.success("Registered successfully.");
+                }
             } else {
-                throw new Error("Unable to signup");
+                throw new Error("Unable to signup. Status: " + response.status);
             }
-        }).catch(apiError => console.log(apiError));
+        }).catch(err => {
+            let message = "Error while sign-up.";
+
+            if (err.response) {
+                message = `${message} Status: ${err.response.status}, Message: ${err.response.data?.error}`;
+            } else {
+                message = `${message} Error: ${err.message}`;
+            }
+
+            toast.error(message);
+        });
     };
 
     return (
@@ -166,7 +195,7 @@ const SignUp = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{m: 1, bgcolor: pink[500]}}>
+                    <Avatar sx={{m: 1, backgroundColor: pink[500]}}>
                         <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
@@ -209,6 +238,7 @@ const SignUp = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    type={"email"}
                                     required
                                     fullWidth
                                     id="email"
@@ -217,7 +247,7 @@ const SignUp = () => {
                                     autoComplete="email"
                                     value={email}
                                     error={!isEmailValid}
-                                    helperText={!isEmailValid ? "Please enter value" : ""}
+                                    helperText={!isEmailValid ? "Please enter valid email" : ""}
                                     onChange={(event => {
                                         validateForm(event, "EMAIL")
                                     })}
@@ -263,12 +293,20 @@ const SignUp = () => {
                                     fullWidth
                                     name="contactNumber"
                                     label="Contact Number"
-                                    type="text"
+                                    type="number"
                                     id="contactNumber"
                                     autoComplete="mobile"
                                     value={contact}
                                     error={!isContactNumberValid}
                                     helperText={!isContactNumberValid ? "Please enter value" : ""}
+                                    sx={{
+                                        "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+                                            display: "none",
+                                        },
+                                        "& input[type=number]": {
+                                            MozAppearance: "textfield",
+                                        }
+                                    }}
                                     onChange={(event => {
                                         validateForm(event, "CONTACT")
                                     })}
