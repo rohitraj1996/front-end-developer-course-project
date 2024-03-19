@@ -21,7 +21,7 @@ const Address = ({setActiveStep}) => {
     const dispatch = useDispatch();
 
     const fetchAddress = () => {
-        const userId = user.id ? user.id : "65ed74ecc5bd2539d2ba66d7";
+        const userId = user.id;
 
         axios.get("http://localhost:8080/api/addresses", {
             headers: {
@@ -50,7 +50,7 @@ const Address = ({setActiveStep}) => {
         const data = new FormData(event.currentTarget);
 
         const payload = {
-            user: user.id ? user.id : "65ed74ecc5bd2539d2ba66d7",
+            user: user.id,
             name: data.get("name"),
             contactNumber: data.get("contact_number"),
             city: data.get("city"),
@@ -66,11 +66,19 @@ const Address = ({setActiveStep}) => {
         }
 
         axios.post("http://localhost:8080/api/addresses", payload, {headers: headers})
-            .then(data => {
+            .then(() => {
                 fetchAddress();
+                toast.success("Address saved successfully.");
             })
             .catch(err => {
-                toast.error("Error while saving address.")
+                let message = "Error while saving address.";
+
+                if (err.response) {
+                    message = `${message} Status: ${err.response.status}, Message: ${err.response.data?.error}`;
+                } else {
+                    message = `${message} Error: ${err.message}`;
+                }
+                toast.error(message)
             })
 
         event.currentTarget.reset();
