@@ -33,9 +33,13 @@ const useAuthentication = () => {
         }
     }
 
-    const checkForToken = (res) => {
+    const checkForToken = (res, request) => {
         if (res?.token) {
             return res.token
+        }
+
+        if (request.getResponseHeader('x-Auth-Token')) {
+            return request.getResponseHeader('x-Auth-Token');
         }
 
         toast.error("No 'token' key present in response. Please check if back-end is properly sending response.");
@@ -68,15 +72,15 @@ const useAuthentication = () => {
     const login = (username, password, successLoginCallback, enqueueSnackbar) => {
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/api/auth/signin",
+            url: "/api/auth/signin",
             data: JSON.stringify({username, password}),
             contentType: "application/json",
             async: false,
-            success: (data) => {
+            success: (data, tS, request) => {
 
                 // ***********************************************************************************************
-                // As there is problem in back-end, only sending token and not user details like id, roles.
-                // Fixing user idd and roles here to fetch and retrieve address for UI to work.
+                // As there was problem in back-end, only sending token and not user details like id, roles.
+                // Fixing user id and roles here to fetch and retrieve address for UI to work.
                 // Uncomment if back-end is not giving proper response and also change the value as per
                 // your data and requirement.
 
@@ -85,7 +89,7 @@ const useAuthentication = () => {
 
                 // ***********************************************************************************************
 
-                const token = checkForToken(data);
+                const token = checkForToken(data, request);
                 const roles = checkForRoles(data);
                 const id = checkForUserId(data);
 

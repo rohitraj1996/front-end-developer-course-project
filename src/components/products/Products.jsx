@@ -11,9 +11,7 @@ const Products = memo(() => {
 
     const {
         products,
-        errorWhileLoadingProducts,
         categories,
-        errorWhileLoadingCategories,
         filter,
         searchKeyword
     } = useSelector(

@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const loadProducts = () => dispatch => {
 
-    axios.get("http://localhost:8080/api/products").then(response => {
+    axios.get("/api/products").then(response => {
         if (response?.data?.length > 0) {
             dispatch({
                 type: "LOAD_PRODUCTS",
@@ -36,13 +36,13 @@ export const addProduct = (product, token, successCallback, errorCallback) => di
 
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'x-auth-token': `${token}`
     }
 
-    axios.post("http://localhost:8080/api/products", product, {headers}).then(res => {
+    axios.post("/api/products", product, {headers}).then(res => {
 
         if (res.data) {
-            product.id = res.data;
+            product.id = res.data?.id || res.data;
         }
 
         if (typeof successCallback === 'function') {
@@ -73,14 +73,10 @@ export const editProduct = (product, token, successCallback, errorCallback) => d
 
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'x-auth-token': `${token}`
     }
 
-    axios.put("http://localhost:8080/api/products/" + product.id, product, {headers}).then(res => {
-
-        if (res.data) {
-            product.id = res.data;
-        }
+    axios.put("/api/products/" + product.id, product, {headers}).then(() => {
 
         if (typeof successCallback === 'function') {
             successCallback();
@@ -110,10 +106,10 @@ export const deleteProduct = (id, token, successCallback, errorCallback) => disp
 
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'x-auth-token': `${token}`
     }
 
-    axios.delete("http://localhost:8080/api/products/" + id, {headers}).then(res => {
+    axios.delete("/api/products/" + id, {headers}).then(res => {
 
         if (typeof successCallback === 'function') {
             successCallback();
@@ -141,7 +137,7 @@ export const deleteProduct = (id, token, successCallback, errorCallback) => disp
 
 export const loadCategories = () => dispatch => {
 
-    axios.get("http://localhost:8080/api/products/categories").then(response => {
+    axios.get("/api/products/categories").then(response => {
         if (response?.data?.length > 0) {
             dispatch({
                 type: "LOAD_CATEGORIES",

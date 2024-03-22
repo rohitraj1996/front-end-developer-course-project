@@ -23,10 +23,10 @@ const Address = ({setActiveStep}) => {
     const fetchAddress = () => {
         const userId = user.id;
 
-        axios.get("http://localhost:8080/api/addresses", {
+        axios.get("/api/addresses", {
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": `Bearer ${user.token}`
+                "x-auth-token": `${user.token}`
             }
         })
             .then(response => {
@@ -62,10 +62,10 @@ const Address = ({setActiveStep}) => {
 
         const headers = {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.token}`
+            'x-auth-token': `${user.token}`
         }
 
-        axios.post("http://localhost:8080/api/addresses", payload, {headers: headers})
+        axios.post("/api/addresses", payload, {headers: headers})
             .then(() => {
                 fetchAddress();
                 toast.success("Address saved successfully.");

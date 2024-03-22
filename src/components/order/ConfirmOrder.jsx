@@ -40,11 +40,11 @@ const ConfirmOrder = ({setActiveStep}) => {
 
         const headers = {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.token}`
+            'x-auth-token': `${user.token}`
         }
 
 
-        axios.post("http://localhost:8080/api/orders", payload, {headers: headers})
+        axios.post("/api/orders", payload, {headers: headers})
             .then(response => {
                 dispatch(setFilter("ALL"));
                 dispatch(deleteOrder());
@@ -74,7 +74,7 @@ const ConfirmOrder = ({setActiveStep}) => {
                         spacing={2}
                     >
                         <Grid justifyContent="flex-start" item xs={7} maxWidth={"100% !important"}
-                              sx={{paddingBottom: "100px"}}>
+                              sx={{paddingBottom: "75px"}}>
                             <Grid
                                 justifyContent="flex-start"
                                 alignItems="flex-start"

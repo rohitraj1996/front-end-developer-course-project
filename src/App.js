@@ -21,7 +21,7 @@ function App() {
     useEffect(() => {
         dispatch(loadProducts());
         dispatch(loadCategories());
-    }, []);
+    }, [dispatch]);
 
     return (
         <Box>

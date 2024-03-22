@@ -153,7 +153,7 @@ const SignUp = () => {
             return;
         }
 
-        axios.post("http://localhost:8080/api/auth/signup", {
+        axios.post("/api/auth/signup", {
             email,
             password,
             firstName: fName,
