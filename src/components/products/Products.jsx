@@ -28,17 +28,22 @@ const Products = memo(() => {
     const getSortedProducts = () => {
 
         const sortValue = sort.value;
+        // Shallow copying the value of products, so that original should not be modified
         const productsToSort = [...products];
 
         if (sortValue === options[1].value) {
+            // Sort by price high to low
             productsToSort.sort((p1, p2) => p2.price - p1.price);
         } else if (sortValue === options[2].value) {
+            // Sort by price low to high
             productsToSort.sort((p1, p2) => p1.price - p2.price);
         } else if (sortValue === options[3].value) {
+            // As created/modified date is not present, hence sorting using id from high to low
             productsToSort.sort((p1, p2) => p1.id > p2.id ? -1 : p2.id > p1.id ? 1 : 0);
         }
 
         if (searchKeyword) {
+            // Filtering for the search input entered by the user
             return productsToSort.filter(p => p.name?.toLowerCase().includes(searchKeyword))
         }
 

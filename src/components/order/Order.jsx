@@ -8,6 +8,8 @@ import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {changeOrderStep} from "../../common/store/actions/orderActions";
 import {useNavigate} from "react-router-dom";
 import "./Order.css";
+import {useParams} from "react-router";
+import {toast} from "react-toastify";
 
 const Order = () => {
 
@@ -16,6 +18,7 @@ const Order = () => {
     );
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {id} = useParams();
 
     const steps = ["Items", "Select Address", "Confirm Order"];
 
@@ -24,6 +27,14 @@ const Order = () => {
             navigate("/");
         }
     }, [navigate, product]);
+
+    useEffect(() => {
+        if (product && id !== product?.id) {
+            navigate("/");
+            toast.error("Id: " + id + " not matched to previous selected product to buy.",
+                {toastId: "invalidProductId"});
+        }
+    }, [id, product]);
 
     const setActiveStep = stepNumber => {
         dispatch(changeOrderStep(stepNumber));

@@ -64,6 +64,9 @@ const SignUp = () => {
                 setIsEmailValid(false);
             }
         } else if (key === "PASSWORD") {
+
+            // There are 2 possibilities: One, user will first set the password and second, user will first set
+            // confirm password and then password. Hence, checking both use case
             setPassword(event.target.value);
 
             if (event.target.value) {

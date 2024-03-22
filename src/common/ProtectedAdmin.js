@@ -7,8 +7,10 @@ const ProtectedAdmin = ({children}) => {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
-        if (!user?.token || !user?.roles?.includes("ADMIN")) {
+        if (!user?.token) {
             navigate("/signin");
+        } else if (!user?.roles?.includes("ADMIN")) {
+            navigate("/");
         }
     }, []);
 

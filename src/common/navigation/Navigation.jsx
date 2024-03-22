@@ -22,7 +22,7 @@ const Navigation = () => {
     const searchProduct = debounce((keyword) => {
         console.log(keyword);
         dispatch(setSearch(keyword))
-    }, 400);
+    }, 300);
 
     useEffect(() => {
         dispatch(setSearch(null));

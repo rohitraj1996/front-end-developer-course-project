@@ -44,6 +44,11 @@ const ProductForm = () => {
         state => state.products, shallowEqual
     );
 
+    /**
+     * As this component is used for both modify and add product, hence using useEffect to track if this page
+     * is called from modify or add by adding id and products as dependencies. If user comes directly by pasting
+     * link and give wrong id in url then it will be directed to home page.
+     */
     useEffect(() => {
 
         if (id && products && products?.length > 0) {
@@ -57,6 +62,9 @@ const ProductForm = () => {
                     label: tempProduct.category.charAt(0).toUpperCase() + tempProduct.category.slice(1).toLowerCase(),
                     value: tempProduct.category
                 });
+            } else {
+                navigate("/");
+                toast.error("Invalid product id: " + id, {toastId: "invalidProductId"});
             }
         } else {
             setProduct({...FORM_INITIAL_STATE});
@@ -65,6 +73,10 @@ const ProductForm = () => {
 
     }, [id, products]);
 
+    /**
+     * This is used to form categories options for Select, as category can change by creating it on Select.
+     * Hence, monitoring this category state change so that Select options also include newly added category.
+     */
     useEffect(() => {
 
         if (categories && categories.length > 0) {
@@ -120,6 +132,7 @@ const ProductForm = () => {
         let isValid = true;
         const tempFormValidation = {};
 
+        // Validating if required fields are filled or not
         Object.entries(product).forEach(([k, v]) => {
 
             if (formValidation.hasOwnProperty(k)) {

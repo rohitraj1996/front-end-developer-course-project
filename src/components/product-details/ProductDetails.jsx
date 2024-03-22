@@ -22,6 +22,10 @@ const ProductDetails = memo(() => {
 
     useEffect(() => {
         const pd = products.filter(p => p.id === id)?.[0];
+        if (!pd) {
+            toast.error("Invalid product id: " + id, {toastId: "invalidProductId"});
+            navigate("/");
+        }
         setProduct(pd);
     }, [id, products]);
 

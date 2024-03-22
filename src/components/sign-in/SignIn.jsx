@@ -45,7 +45,7 @@ const SignIn = () => {
             setPasswordError(false);
         }
 
-        if (emailError || passwordError) {
+        if (!email || !password) {
             return;
         }
 
