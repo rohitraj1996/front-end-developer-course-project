@@ -1,6 +1,8 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).\
+<b>Back-end to use for this project is can be
+found [here](https://github.com/mohinishjoshi/ecommerce-upgrad/tree/master)</b>
 
 ## Available Scripts
 
